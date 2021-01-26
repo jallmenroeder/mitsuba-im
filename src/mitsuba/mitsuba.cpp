@@ -384,9 +384,11 @@ int mitsuba_app(int argc, char*const* argv) {
 			if (scene->destinationExists() && skipExisting)
 				continue;
 
+			ProcessConfig config;
+			config.maxThreads = nprocs;
 			std::unique_ptr<InteractiveSceneProcess> ithr(
-				classicRendering ? nullptr :
-				InteractiveSceneProcess::create(scene, scene->getSampler(), scene->getIntegrator(), ProcessConfig())
+					classicRendering ? nullptr :
+					InteractiveSceneProcess::create(scene, scene->getSampler(), scene->getIntegrator(), config)
 			);
 			if (ithr) {
 				SLog(EInfo, "Using responsive integrator interface");
