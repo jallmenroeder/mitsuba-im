@@ -51,7 +51,7 @@ add_custom_target(PARTIAL_BUILD ALL)
 macro (publish_external_targets PREFIX MAIN_TARGET)
 	add_dependencies(PARTIAL_BUILD ${MAIN_TARGET} ${ARGN})
 	string(TOUPPER ${PREFIX} upper_PREFIX)
-	copy_library_targets(${MTS_${upper_PREFIX}_INSTALL_DIR}/lib ${MAIN_TARGET} ${ARGN})
+	copy_library_targets(${MTS_${upper_PREFIX}_INSTALL_DIR}/lib/${CMAKE_BUILD_TYPE} ${MAIN_TARGET} ${ARGN})
 endmacro()
 
 ###########################################################################
@@ -82,7 +82,7 @@ if (MTS_ZLIB_INSTALL_DIR)
 endif ()
 
 function (find_mts_zlib_library)
-	set(ZLIB_LIBRARY ${ZLIB_ROOT}/lib/zlibstatic.alib)
+	set(ZLIB_LIBRARY ${ZLIB_ROOT}/lib/${CMAKE_BUILD_TYPE}/zlibstatic.alib)
 	if (EXISTS ${ZLIB_LIBRARY})
 		set(ZLIB_LIBRARY ${ZLIB_LIBRARY} PARENT_SCOPE)
 		set(ZLIB_LIBRARIES ${ZLIB_LIBRARY} PARENT_SCOPE)
